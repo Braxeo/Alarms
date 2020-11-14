@@ -14,4 +14,5 @@
     <string name="add_alarm">Add Alarm</string>
     <string name="time">TIME</string>
     <string name="days">DAYS</string>
+    <string name="description">Description</string>
 </resources>

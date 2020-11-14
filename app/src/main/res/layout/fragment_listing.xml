@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="com.brandonkitt.alarms.viewmodel.ListingViewModel"/>
+        <variable name="viewmodel" type="ListingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +28,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:contentDescription="@string/add_alarm"
+            android:onClick="@{() -> viewmodel.onAddAlarm()}"
             app:srcCompat="@drawable/ic_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

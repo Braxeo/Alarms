@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptionsBuilder
+import androidx.navigation.Navigator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.brandonkitt.alarms.R
@@ -30,15 +33,24 @@ class ListingFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         with(FragmentListingBinding.inflate(inflater, container, false)){
+            viewmodel = viewModel
+            lifecycleOwner = viewLifecycleOwner
             recyclerView.adapter = adapter
             viewModel.alarms.observe(viewLifecycleOwner) { adapter.submitList(it) }
+            viewModel.action.observe(viewLifecycleOwner) { action(it) }
             return root
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        fab.setOnClickListener { findNavController().navigate(R.id.action_ListingFragment_to_SecondFragment) }
+    private fun action(action: ListingViewModel.Action){
+        when(action){
+            ListingViewModel.Action.AddAlarm -> showAlarmDetails(alarmId = null)
+            is ListingViewModel.Action.ViewAlarmDetails -> showAlarmDetails(alarmId = action.alarmId)
+        }
+    }
+
+    private fun showAlarmDetails(alarmId: String?){
+        findNavController().navigate(R.id.action_ListingFragment_to_SecondFragment , bundleOf("id" to alarmId))
     }
 }
 
