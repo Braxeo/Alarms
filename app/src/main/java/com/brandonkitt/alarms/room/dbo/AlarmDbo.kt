@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "alarms")
 data class AlarmDbo(
     @PrimaryKey @ColumnInfo(name = "id") val alarmId: String,
-    val name: String,
+    val description: String,
     val time: String,
     val days: String,
     val enabled: Boolean

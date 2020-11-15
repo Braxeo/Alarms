@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="name" type="String" />
+        <variable name="description" type="String" />
+        <variable name="time" type="String" />
+        <variable name="checked" type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +33,7 @@
                 android:id="@+id/text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{time}"
                 tools:text="5:12"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -40,11 +43,13 @@
 
         <TextView
             android:id="@+id/text_name"
-            android:text="@{name}"
-            android:gravity="center"
-            tools:text="Take the bins out"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@{description}"
+            android:gravity="start"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            tools:text="Take the bins out"
             app:layout_constraintStart_toEndOf="@id/layout_time"
             app:layout_constraintEnd_toStartOf="@id/switch_enabled"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,13 +59,10 @@
             android:id="@+id/switch_enabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="@{name}"
+            android:checked="@{checked}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

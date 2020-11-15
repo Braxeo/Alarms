@@ -5,7 +5,7 @@ import java.util.*
 
 data class AlarmEntity(
     val alarmId: String,
-    val name: String,
+    val description: String,
     val time: Date,
     val days: List<DayOfWeek>,
     val enabled: Boolean

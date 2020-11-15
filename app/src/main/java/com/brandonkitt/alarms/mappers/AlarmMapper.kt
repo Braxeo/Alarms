@@ -8,7 +8,7 @@ object AlarmMapper {
     fun toEntity(dbos: List<AlarmDbo>): List<AlarmEntity> {
         return dbos.map { AlarmEntity(
             it.alarmId,
-            it.name,
+            it.description,
             Converter.stringToDate(it.time),
             Converter.stringToDays(it.days),
             it.enabled
@@ -18,7 +18,7 @@ object AlarmMapper {
     fun toDbo(entities: List<AlarmEntity>): List<AlarmDbo> {
         return entities.map { AlarmDbo(
             it.alarmId,
-            it.name,
+            it.description,
             Converter.dateToString(it.time),
             Converter.daysToString(it.days),
             it.enabled

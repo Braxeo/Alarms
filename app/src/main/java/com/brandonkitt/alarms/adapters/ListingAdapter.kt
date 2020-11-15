@@ -27,7 +27,9 @@ class ListingAdapter : RecyclerView.Adapter<ListingAdapter.AlarmViewHolder>() {
 
     class AlarmViewHolder(private val binding: ItemListingBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(alarm: AlarmEntity){
-            binding.name = alarm.name
+            binding.description = "This is the description"//alarm.description
+            binding.checked = alarm.enabled
+            binding.time = "time"
         }
     }
 
