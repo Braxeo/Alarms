@@ -31,12 +31,12 @@ class ListingFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         with(FragmentListingBinding.inflate(inflater, container, false)){
             viewmodel = viewModel
             lifecycleOwner = viewLifecycleOwner
             recyclerView.adapter = adapter
-            viewModel.alarms.observe(viewLifecycleOwner) { adapter.submitList(it) }
+            viewModel.alarms.observe(viewLifecycleOwner) { adapter.submitList(it) { id -> viewModel.onAlarmSelected(id) } }
             viewModel.action.observe(viewLifecycleOwner) { action(it) }
             return root
         }
@@ -50,7 +50,7 @@ class ListingFragment: Fragment() {
     }
 
     private fun showAlarmDetails(alarmId: String?){
-        findNavController().navigate(R.id.action_ListingFragment_to_SecondFragment , bundleOf("id" to alarmId))
+        findNavController().navigate(R.id.action_ListingFragment_to_DetailsFragment , bundleOf("id" to alarmId))
     }
 }
 

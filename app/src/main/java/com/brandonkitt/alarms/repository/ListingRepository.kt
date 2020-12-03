@@ -15,6 +15,10 @@ class ListingRepository @Inject constructor(
     private val dummyEndpoint: DummyEndpoint
 ) {
     fun getAlarms(): LiveData<List<AlarmEntity>> = MutableLiveData(dummyEndpoint.getAlarms())  // Transformations.map(alarmDao.getAlarms()){ AlarmMapper.toEntity(it) }
+    suspend fun insertAlarm(alarmEntity: AlarmEntity) {
+        val alarmDbo = AlarmMapper.toDbo(listOf(alarmEntity)).first()
+        alarmDao.insertAlarm(alarmDbo)
+    }
 }
 
 

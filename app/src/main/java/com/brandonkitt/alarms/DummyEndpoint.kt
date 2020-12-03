@@ -16,4 +16,8 @@ class DummyEndpoint @Inject constructor() {
         )
     }
 
+    fun getAlarm(id: String): AlarmEntity {
+        return AlarmEntity(UUID.randomUUID().toString(), "Alarm 1", Date(), listOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY), false)
+    }
+
 }

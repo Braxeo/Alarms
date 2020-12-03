@@ -2,16 +2,15 @@ package com.brandonkitt.alarms.viewmodel
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.brandonkitt.alarms.entities.AlarmEntity
 import com.brandonkitt.alarms.repository.ListingRepository
 import com.brandonkitt.alarms.room.dbo.AlarmDbo
+import kotlinx.coroutines.launch
+import java.util.*
 
 class ListingViewModel @ViewModelInject constructor(
-    repository: ListingRepository,
+    private val repository: ListingRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ) : ViewModel(){
 
@@ -21,7 +20,25 @@ class ListingViewModel @ViewModelInject constructor(
     val action: LiveData<Action> = _action
 
     fun onAddAlarm(){
-        _action.value = Action.AddAlarm
+        viewModelScope.launch {
+            val alarm = createNewAlarm()
+            repository.insertAlarm(alarm)
+            _action.value = Action.AddAlarm
+        }
+    }
+
+    fun onAlarmSelected(id: String) {
+        _action.value = Action.ViewAlarmDetails(alarmId = id)
+    }
+
+    private fun createNewAlarm(): AlarmEntity {
+        return AlarmEntity(
+            alarmId = UUID.randomUUID().toString(),
+            description = "",
+            time = Date(),
+            days = emptyList(),
+            enabled = false
+        )
     }
 
     sealed class Action {

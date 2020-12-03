@@ -5,15 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import com.brandonkitt.alarms.room.dao.AlarmDao
 import com.brandonkitt.alarms.room.dbo.AlarmDbo
+import com.brandonkitt.alarms.room.dbo.NewEntityDbo
 import com.brandonkitt.alarms.utilities.DATABASE_NAME
 
 /**
  * The Room database for this app
  */
-@Database(entities = [AlarmDbo::class], version = 1, exportSchema = false)
+@Database(entities = [AlarmDbo::class, NewEntityDbo::class], version = 2, exportSchema = false)
 abstract class RoomDatabase : androidx.room.RoomDatabase() {
 
     abstract fun alarmDao(): AlarmDao
+    abstract fun newEntitiyDao(): NewEntityDbo
 
     companion object {
 

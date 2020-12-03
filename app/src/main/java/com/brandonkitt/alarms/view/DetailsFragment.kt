@@ -4,28 +4,55 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.brandonkitt.alarms.R
+import com.brandonkitt.alarms.databinding.FragmentDetailsBinding
+import com.brandonkitt.alarms.entities.AlarmEntity
+import com.brandonkitt.alarms.viewmodel.DetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_details.*
+import java.util.*
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
+    private val viewModel: DetailsViewModel by navGraphViewModels(R.id.nav_graph) {
+        defaultViewModelProviderFactory
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
+    ): View {
+        with(FragmentDetailsBinding.inflate(inflater, container, false)){
+            lifecycleOwner = viewLifecycleOwner
+            viewmodel = viewModel
+            afterTextChanged = viewModel.afterTextChanged
+            alarm = viewModel.alarm
+            viewModel.alarm.observe(viewLifecycleOwner) { updateForAlarm(it) }
+            viewModel.action.observe(viewLifecycleOwner) { action(it) }
+            return root
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun action(action: DetailsViewModel.Action) {
+        when(action){
+            DetailsViewModel.Action.Dismiss -> findNavController().navigate(R.id.action_DetailsFragment_to_ListingFragment)
+        }
+    }
 
-        view.findViewById<Button>(R.id.button_second).setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+    private fun updateForAlarm(alarmEntity: AlarmEntity) {
+
+        val calendar = Calendar.getInstance().apply { time = alarmEntity.time }
+
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            time_picker.hour = minute
+        } else {
+            time_picker.currentHour = hour
         }
     }
 }

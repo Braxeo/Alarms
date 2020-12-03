@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="listing_fragment_label">Listing Fragment</string>
+    <string name="details_fragment_label">Details Fragment</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -15,4 +16,6 @@
     <string name="time">TIME</string>
     <string name="days">DAYS</string>
     <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

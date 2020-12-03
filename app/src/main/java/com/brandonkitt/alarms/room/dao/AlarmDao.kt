@@ -18,6 +18,9 @@ interface AlarmDao {
     @Delete
     suspend fun deleteAlarm(alarmDbo: AlarmDbo)
 
+    @Query("DELETE * FROM alarms ")
+    suspend fun deleteAlarmWithId(id: String)
+
     @Update
     suspend fun updateAlarm(alarmDbo: AlarmDbo)
 }
